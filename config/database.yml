@@ -1,0 +1,19 @@
+
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  username: techstars
+  password: 
+
+development:
+  <<: *default
+  database: minproject
+
+test:
+  <<: *default
+  database: minproject
+
+production:
+  <<: *default
+  database: minproject
