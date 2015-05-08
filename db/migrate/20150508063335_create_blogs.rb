@@ -4,9 +4,9 @@ class CreateBlogs < ActiveRecord::Migration
       t.string :title
       t.string :caption
       t.text :description
-      t.int :user_id
-      t.boolean :is_draft
-      t.boolean :is_archived
+      t.integer :user_id
+      t.boolean :is_draft, default: true
+      t.boolean :is_archived, default: false
 
       t.timestamps null: false
     end
