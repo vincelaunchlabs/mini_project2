@@ -1,0 +1,21 @@
+- @blogs.each do |blogs|
+
+  %hr
+  %br  		
+  %ins
+    %strong
+      = blogs.title
+  %br
+  Content:
+  = blogs.caption
+  %br
+  Description: 	
+  = blogs.description
+  %br
+  By:
+  = blogs.user_id
+  = link_to "Edit", "blogs/" + "#{blogs.id}" + "/edit"
+
+  %br
+  %br
+= will_paginate

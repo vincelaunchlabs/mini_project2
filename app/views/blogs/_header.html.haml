@@ -1,0 +1,14 @@
+- if !user_signed_in?
+  %p
+    You are not signed in. Please 
+    = link_to "sign in.", '/users/sign_in'
+     
+- if user_signed_in?
+  %head
+    %p
+      Hi #{current_user.email}
+
+      %p
+        = link_to "Sign out",     '/users/sign_out', method: :delete
+        |
+        = link_to "Edit",         '/users/edit'

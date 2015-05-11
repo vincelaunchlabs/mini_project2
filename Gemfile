@@ -5,8 +5,9 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.1'
 # Use postgresql as the database for Active Record
 gem 'pg'
-gem 'devise',     '3.4.1'
-gem 'haml-rails', '0.9'
+gem 'devise',         '3.4.1'
+gem 'haml-rails',     '0.9'
+gem 'will_paginate',  '3.0.4'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'

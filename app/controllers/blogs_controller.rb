@@ -14,27 +14,41 @@ class BlogsController < ApplicationController
 
 
   def edit
-
+    @blog = Blog.find(params[:id])
   end
+
+
+  def update
+    @blog = Blog.find(params[:id])
+    if @blog.update_attributes(user_params)
+      render root_path
+    end
+  end
+
 
   def new
   	@blog = Blog.new
   end
 
   def create	
-  	@blog = Blog.new(params.require(:blog).permit(:title,:caption,:description))
-  	@blog.user_id = current_user.id
-	if @blog.save
-		flash[:success] = "Micropost created!"
-		redirect_to root_url
-	else
-		flash.now[:error] = "Could not save"
-		render '/pages/home'
-	end
+    @blog = Blog.new(blog_params)
+    @blog.user_id = current_user.id
+  	if @blog.save
+  		flash[:success] = "Micropost created!"
+  		redirect_to root_url
+  	else
+  		flash.now[:error] = "Could not save"
+  		render '/pages/home'
+  	end
   end
 
   private
-  			    # Confirms a logged-in user.
+
+    def blog_params
+      params.require(:blog).permit(:title,:caption,:description)
+    end
+
+    # Confirms a logged-in user.
 		def logged_in_user
 			unless logged_in?
 		      	store_location
@@ -52,8 +66,5 @@ class BlogsController < ApplicationController
    		   session[:forwarding_url] = request.url if request.get?
    		end
 
-   		def user_email
-   			current_user.id
-   		end
 
 end
