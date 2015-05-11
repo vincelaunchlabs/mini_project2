@@ -2,14 +2,17 @@ class BlogsController < ApplicationController
 
   before_action :logged_in_user, only: [:new, :edit, :index, :show, :create,]
 
+  def blogs
+    @blog = Blog.all
+  end
 
   def index
-    @blogs = Blogs.paginate(page: params[:page])
+
   end
 
 
+
   def show
-   
   end
 
 

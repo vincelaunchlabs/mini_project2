@@ -1,0 +1,16 @@
+= render 'header'
+
+
+- @blog.each do |blogs|
+  - if blogs.user_id == current_user.id
+    %hr
+    %ins
+      %strong
+        = blogs.title
+    %br
+    = blogs.caption
+    %br
+    %br
+    = blogs.description
+    %br
+    %br

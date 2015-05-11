@@ -9,6 +9,7 @@ Rails.application.routes.draw do
    post   'blogs'           => 'blogs#create'
    get    'blogs/:id/edit'  => 'blogs#edit'  
    post   'blogs/:id/edit'  => 'blogs#update'
+   get   'blogs'           => 'blogs'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
