@@ -4,12 +4,12 @@ class BlogsController < ApplicationController
 
 
   def index
-
+    @blogs = Blogs.paginate(page: params[:page])
   end
 
 
   def show
-
+   
   end
 
 
