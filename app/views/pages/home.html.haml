@@ -1,0 +1,18 @@
+My Blog
+%head
+  %p
+    - if !user_signed_in?
+      = link_to "Sign up",        	'/users/sign_up'
+      |
+      = link_to "Sign in",		    '/users/sign_in'
+    - if user_signed_in?
+      Hi #{current_user.email}
+
+      %p
+        = link_to "Sign out",			'/users/sign_out', method: :delete
+        |
+        = link_to "Edit", 				'/users/edit'
+
+
+- if user_signed_in?
+  %p= link_to "Create Blog",  blogs_new_path
