@@ -2,6 +2,11 @@ module Ajax
   class BlogsController < ApplicationController
     before_filter :authenticate_user!
 
+    def go_live
+      
+    end
+    
+
     def archived
       @blog = Blog.find_by_id(params[:blog_id].to_i)
 
