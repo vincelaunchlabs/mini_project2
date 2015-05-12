@@ -16,7 +16,7 @@
     %br
     -if blogs.is_draft
       %button{id: blogs.id} Edit
-      %button{id: blogs.id} Live
+      %button{id: blogs.id, :class => "go_lige_button"} Live
     -else
       .archive_button
         - if blogs.is_archived?

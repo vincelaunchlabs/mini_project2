@@ -2,12 +2,29 @@ module Ajax
   class BlogsController < ApplicationController
     before_filter :authenticate_user!
 
-    def go_live
-      
-    end
-    
 
-    def archived
+    def go_live
+      @blog = Blog.find_by_id(params[:blog_id].to_i)
+
+      if @blog.present?
+        if @blog.is_draft?
+          @blog.is_draft = false
+        else
+          @blog.is_draft = true
+        end
+        if @blog.save
+          render :json => {success: "You have successfully put your blog on live!", is_draft: @blog.is_draft}, :status => 200
+        else
+          render :json => {error: "Update failed!"}, status: 300
+        end
+      else
+        render :json => {error: "Blog not found!"}, status: 300
+      end
+    end
+
+
+
+    def archive
       @blog = Blog.find_by_id(params[:blog_id].to_i)
 
       if @blog.present?
