@@ -44,6 +44,10 @@ class BlogsController < ApplicationController
 
   private
 
+    def micropost_params
+      params.require(:micropost).permit(:content, :picture)
+    end
+    
     def blog_params
       params.require(:blog).permit(:title,:caption,:description)
     end

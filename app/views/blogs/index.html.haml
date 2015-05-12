@@ -1,7 +1,6 @@
 = render 'header'
-= button_to "Create Blog", new_blog_path, :method => :get
-|
 = link_to "Back", :back
+= button_to "Create Blog", new_blog_path, :method => :get
 
 - @blog.each do |blogs|
   - if blogs.user_id == current_user.id
