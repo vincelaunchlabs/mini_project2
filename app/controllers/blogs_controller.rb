@@ -1,18 +1,15 @@
 class BlogsController < ApplicationController
 
-  before_action :logged_in_user, only: [:new, :edit, :index, :show, :create,]
+  before_action :logged_in_user, only: [:new, :edit, :index, :show, :create, :update]
 
-  def blogs
-    @blog = Blog.all
-  end
 
   def index
-
+    @blog = Blog.where(user_id: current_user.id)
   end
-
 
 
   def show
+    @blog = Blog.find(params[:id])
   end
 
 
@@ -24,7 +21,7 @@ class BlogsController < ApplicationController
   def update
     @blog = Blog.find(params[:id])
     if @blog.update_attributes(user_params)
-      render root_path
+      render blogs_path
     end
   end
 

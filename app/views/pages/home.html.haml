@@ -1,0 +1,10 @@
+=render 'blogs/header'
+
+- if user_signed_in?
+  %p
+    = link_to "Create Blog",  new_blog_path
+    |     
+    = link_to "My Blogs",     blogs_path
+
+  %p
+    = render 'blogs'

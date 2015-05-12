@@ -1,0 +1,25 @@
+= render 'header'
+= button_to "Create Blog", new_blog_path, :method => :get
+|
+= link_to "Back", :back
+
+- @blog.each do |blogs|
+  - if blogs.user_id == current_user.id
+    %hr
+    %ins
+      %strong
+        = link_to blogs.title, blog_path(blogs)
+    %br
+    = blogs.caption
+    %br
+    = blogs.description
+    %br
+    -if blogs.is_draft
+      %button{id: blogs.id} Edit
+      %button{id: blogs.id} Live
+    -else
+      .archive_button
+        - if blogs.is_archived?
+          %button{id: blogs.id, :class => "archive_button"} Archive
+        - else
+          %button{id: blogs.id, :class => "archive_button"} Archived
