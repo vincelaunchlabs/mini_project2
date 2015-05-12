@@ -8,6 +8,7 @@ gem 'pg'
 gem 'devise',         '3.4.1'
 gem 'haml-rails',     '0.9'
 gem 'will_paginate',  '3.0.4'
+gem 'carrierwave',    '0.8.0'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
