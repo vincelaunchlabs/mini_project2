@@ -1,4 +1,3 @@
-
 = will_paginate @blogs
 - @blogs.each do |blogs|
 
@@ -13,10 +12,6 @@
   %br
   Description: 	
   = blogs.description
-  %br
-  By:
-  = blogs.user_id
-  = link_to "Edit", "blogs/" + "#{blogs.id}" + "/edit"
 
   %br
   %br

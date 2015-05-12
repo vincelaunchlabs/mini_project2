@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
 
-	def index
-    @blogs = Blog.all.paginate(page: params[:page], per_page: 1)
+	def home
+    @blogs = Blog.where(is_draft: false).paginate(page: params[:page], per_page: 5)
 	end
 end

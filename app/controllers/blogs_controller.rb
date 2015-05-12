@@ -1,6 +1,6 @@
 class BlogsController < ApplicationController
 
-  before_action :logged_in_user, only: [:new, :edit, :index, :show, :create, :update]
+  before_action :logged_in_user, only: [:new, :edit, :index, :create, :update]
 
 
   def index
