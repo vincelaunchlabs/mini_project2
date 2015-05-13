@@ -1,6 +1,6 @@
 class BlogsController < ApplicationController
 
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:show]
 
   def index
     @blog = Blog.where(user_id: current_user.id)
