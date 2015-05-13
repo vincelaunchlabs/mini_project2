@@ -2,7 +2,8 @@
 - @blogs.each do |blogs|
 
   %hr
-  %br  		
+  %br  	
+  = image_tag blogs.image.to_s	
   %ins
     %strong
       = blogs.title

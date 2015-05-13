@@ -34,6 +34,8 @@ class BlogsController < ApplicationController
     @blog = Blog.new(blog_params)
     # current_user.blogs.new(params[:blogs])  won't work
     @blog.user_id = current_user.id
+
+
   	if @blog.save
   		flash[:success] = "Micropost created!"
   		redirect_to root_url
@@ -50,7 +52,7 @@ class BlogsController < ApplicationController
     end
     
     def blog_params
-      params.require(:blog).permit(:title,:caption,:description)
+      params.require(:blog).permit(:image, :title,:caption,:description)
     end
 
     # Confirms a logged-in user.

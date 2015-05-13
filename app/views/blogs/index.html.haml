@@ -3,6 +3,8 @@
 
 - @blog.each do |blogs|
   - if blogs.user_id == current_user.id
+
+    = image_tag blogs.image.to_s
     %hr
     %ins
       %strong
@@ -14,7 +16,7 @@
     %br
     -if blogs.is_draft
       %button{id: blogs.id} Edit
-      %button{id: blogs.id, :class => "go_lige_button"} Live
+      %button{id: blogs.id, :class => "go_live_button"} Live
     -else
       .archive_button
         - if blogs.is_archived?
