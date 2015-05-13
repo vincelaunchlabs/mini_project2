@@ -17,6 +17,14 @@
 
 
 $(document).ready(function(){
+  $(".category_select2").select2({
+    var categories = $(this).attr("name");
+    data: categories
+    placeholder: "Category"
+    allowClear: true
+  });
+
+
   $(".archive_button").click(function(){
     var blogID = $(this).attr("id");
     $.ajax({      

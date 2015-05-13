@@ -6,4 +6,9 @@
     = f.text_field :caption, placeholder: "Caption"
     %br
     = f.text_area :description, placeholder: "Create new blog"
+    %br
+    
+    %select.category_select2{:style => "width: 10%"}
+
+    %br
     = f.submit @btnsave

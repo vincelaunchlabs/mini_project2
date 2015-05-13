@@ -1,7 +1,6 @@
 class BlogsController < ApplicationController
 
-  before_action :logged_in_user, only: [:new, :edit, :index, :create, :update]
-
+  before_action :authenticate_user!
 
   def index
     @blog = Blog.where(user_id: current_user.id)
@@ -28,10 +27,12 @@ class BlogsController < ApplicationController
 
   def new
   	@blog = Blog.new
+    @category = Category.all
   end
 
   def create	
     @blog = Blog.new(blog_params)
+    # current_user.blogs.new(params[:blogs])  won't work
     @blog.user_id = current_user.id
   	if @blog.save
   		flash[:success] = "Micropost created!"
@@ -61,12 +62,8 @@ class BlogsController < ApplicationController
 		    end
 		end
 
-	  	# Returns true if the user is logged in, false otherwise.
-  		def logged_in?
-       		!current_user.nil?
-      	end
 
-      	def store_location
+      def store_location
    		   session[:forwarding_url] = request.url if request.get?
    		end
 

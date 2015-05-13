@@ -10,8 +10,8 @@ Rails.application.routes.draw do
 
    namespace :ajax do
       resources :blogs do
-        puts 'live'       => "blogs#go_live"
-        puts 'archive'    => "blogs#archived"
+        #puts 'live'       => "blogs#go_live"
+        #puts 'archive'    => "blogs#archived"
       end
   end
 
