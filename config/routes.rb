@@ -8,11 +8,11 @@ Rails.application.routes.draw do
    resources :blogs, only: [:index, :show, :edit, :update, :new, :create]
 
    namespace :ajax do
-      resources :blogs do
-        #puts 'live'       => "blogs#go_live"
-        #puts 'archive'    => "blogs#archived"
-      end
-  end
+     resources :blogs, except: [:index, :show, :create, :edit, :update, :destroy, :new] do 
+       put 'archive'                     => "blogs#archived"
+       put 'live'                        => "blogs#go_live"
+     end
+   end
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

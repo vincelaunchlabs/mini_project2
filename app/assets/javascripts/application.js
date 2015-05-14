@@ -74,7 +74,7 @@ $('#imageUploader').change(function(data) {
     });
   });
 
-  $(".live_button").click(function(){
+  $(".go_live_button").click(function(){
     var blogID = $(this).attr("id");
     $.ajax({      
       url:"/ajax/blogs/" + blogID + "/live",
@@ -95,6 +95,7 @@ $('#imageUploader').change(function(data) {
         else{
           $("#"+blogID).hide();
           $(".edit_button").hide();
+          $(".archive_button").show();
         }
       }
     });
