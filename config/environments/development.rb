@@ -52,4 +52,7 @@ config.action_mailer.smtp_settings = {
   :password               => "th3r3dp1ll",
   :authentication     => "plain",
 }
+
+config.BLOG_IMG_UPLOAD_DIRECTORY = 'development/images/blogs'
+
 end
