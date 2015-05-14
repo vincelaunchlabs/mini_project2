@@ -1,0 +1,18 @@
+= will_paginate @blogs
+- @blogs.each do |blogs|
+
+  %hr
+  %br  	
+  = image_tag blogs.image.to_s	
+  %ins
+    %strong
+      = blogs.title
+  %br
+  Content:
+  = blogs.caption
+  %br
+  Description: 	
+  = blogs.description
+
+  %br
+  %br

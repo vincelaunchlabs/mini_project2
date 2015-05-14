@@ -1,25 +1,4 @@
-- if !user_signed_in?
-  %p
-    You are not signed in. Please 
-    = link_to "sign in.", '/users/sign_in'
-     
-- if user_signed_in?
-  %head
-    %p
-      Hi #{current_user.email}
-
-      %p
-        = link_to "Sign out",			'/users/sign_out', method: :delete
-        |
-        = link_to "Edit", 				'/users/edit'
-
-  %p
-    
-  %P
-    = form_for (@blog) do |f|
-      = f.text_field :title, placeholder: "Title"
-      %br/
-      = f.text_field :caption, placeholder: "Caption"
-      %br/
-      = f.text_area :description, placeholder: "Create new blog"
-      = f.submit "Create"
+%body{:background => :picture}
+  = link_to "Back",  :back
+  - @btnsave = "Create"
+  = render 'form'

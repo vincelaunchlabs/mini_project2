@@ -14,3 +14,92 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+
+
+$(document).ready(function(){
+
+  // convert image to base 64 ====
+ $('#image_upload').change(function(data) {
+   setTimeout(function(){
+     var fileUpload = new FileReader;
+     var file = document.getElementById("image_upload").files[0];
+     var image = new Image();
+     setTimeout(function(){
+       fileUpload.onload = function (e){
+       return function (e){
+         image.src = e.target.result
+         if(image.width < 400 || image.height < 160){
+           var error_message = "Upload a photo with a 535x350 or bigger dimension.";
+           $('.message').html(error_message);
+           showErrorPopOut();  
+         }
+         else{
+           $('#image_base64_holder').attr("value",e.target.result);
+           $(".image_holder").css("background-image", "url("+image.src+")");
+         }
+       }
+     }(file);
+     fileUpload.readAsDataURL(file);
+     });
+   });
+ });
+
+
+  $(".category_select2").select2({
+    var categories = $(this).attr("name");
+    data: categories
+    placeholder: "Category"
+    allowClear: true
+  });
+
+
+  $(".archive_button").click(function(){
+    var blogID = $(this).attr("id");
+    $.ajax({      
+      url:"/ajax/blogs/" + blogID + "/archive",
+      type: "PUT",
+      dataType:'json',
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+        
+      },
+      error:function(data){ 
+          
+      },
+      success:function(data){
+        if(data.is_archived == true){
+          $("#"+blogID).html("Archived");
+        }
+        else{
+          $("#"+blogID).html("Archive");
+        }
+      }
+    });
+  });
+
+  $(".live_button").click(function(){
+    var blogID = $(this).attr("id");
+    $.ajax({      
+      url:"/ajax/blogs/" + blogID + "/live",
+      type: "PUT",
+      dataType:'json',
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+        
+      },
+      error:function(data){ 
+          
+      },
+      success:function(data){
+        if(data.is_draft == true){
+          $("#"+blogID).html("Live");
+          $(".archive_button").show();
+        }
+        else{
+          $("#"+blogID).hide();
+          $(".edit_button").hide();
+        }
+      }
+    });
+  });
+});
