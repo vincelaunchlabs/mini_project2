@@ -15,7 +15,7 @@
   = blogs.description
   %br
   -if blogs.is_draft
-    %button{id: blogs.id} Edit
+    = button_to "Edit", edit_blog_path(blogs), :method => :get
     %button{id: blogs.id, :class => "go_live_button"} Live
   -else
     .archive_button

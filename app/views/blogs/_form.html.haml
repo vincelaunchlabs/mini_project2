@@ -2,8 +2,7 @@
 %input{id: "imageUploader", type: :file, style: "display: none"}
 %button{id: "buttonUploader"} Upload Image
 = form_for (@blog) do |f|
-    %textarea{name: "image", id: "base64Image", style: "display:none"}
-    /= f.text_area :image, id: "base64Image", style: "display:none"
+    %textarea{name: "image", id: "base64Image", style: "display: none"}
     %br
     = f.text_field :title, placeholder: "Title"
     %br

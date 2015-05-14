@@ -20,9 +20,22 @@ class BlogsController < ApplicationController
 
 
   def update
+    image = params[:image]
     @blog = Blog.find(params[:id])
-    if @blog.update_attributes(user_params)
-      redirect_to blogs_path
+    if @blog.update_attributes(blog_params)
+      if image.present?
+        image64 = image.split(",").second
+        io = BlogImageString.new(Base64.decode64(image64))
+        io.original_filename = "foobar.png"
+        io.content_type = "image/png"
+        @blog.image = io
+        @blog.save
+      end
+        flash[:success] = "Blog updates!"
+        redirect_to blogs_path
+    else
+      flash.now[:error] = "Could not update"
+      redirect_to root_path
     end
   end
 
