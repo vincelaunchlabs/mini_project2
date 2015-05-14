@@ -25,7 +25,7 @@ module Ajax
 
 
 
-    def archive
+    def archived
       @blog = Blog.find_by_id(params[:blog_id].to_i)
 
       if @blog.present?

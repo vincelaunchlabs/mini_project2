@@ -21,8 +21,7 @@
     = button_to "Edit", edit_blog_path(blogs), :method => :get, :class => "edit_button"
     %button{id: blogs.id, :class => "go_live_button"} Live
   -else
-    .archive_button
-      - if blogs.is_archived?
-        %button{id: blogs.id, :class => "archive_button"} Archive
-      - else
-        %button{id: blogs.id, :class => "archive_button"} Archived
+    - if blogs.is_archived?
+      %button{id: blogs.id, :class => "archive_button"} Archived
+    - else
+      %button{id: blogs.id, :class => "archive_button"} Archive

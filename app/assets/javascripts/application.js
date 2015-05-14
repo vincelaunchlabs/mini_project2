@@ -65,10 +65,10 @@ $('#imageUploader').change(function(data) {
       },
       success:function(data){
         if(data.is_archived == true){
-          $("#"+blogID).html("Archived");
+          $(".archive_button").html("Archived");
         }
         else{
-          $("#"+blogID).html("Archive");
+          $(".archive_button").html("Archive");
         }
       }
     });
