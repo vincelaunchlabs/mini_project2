@@ -93,7 +93,7 @@ $('#imageUploader').change(function(data) {
           $(".archive_button").show();
         }
         else{
-          $("#"+blogID).hide();
+          $(".go_live_button").hide();
           $(".edit_button").hide();
           $(".archive_button").show();
         }
