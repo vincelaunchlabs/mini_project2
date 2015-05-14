@@ -1,26 +1,25 @@
 = link_to "Back", :back
 = button_to "Create Blog", new_blog_path, :method => :get
+= will_paginate @blogs
+- @blogs.each do |blogs|
 
-- @blog.each do |blogs|
-  - if blogs.user_id == current_user.id
-
-    %hr
-    = image_tag blogs.image.to_s
-    %br
-    %ins
-      %strong
-        = link_to blogs.title, blog_path(blogs)
-    %br
-    = blogs.caption
-    %br
-    = blogs.description
-    %br
-    -if blogs.is_draft
-      %button{id: blogs.id} Edit
-      %button{id: blogs.id, :class => "go_live_button"} Live
-    -else
-      .archive_button
-        - if blogs.is_archived?
-          %button{id: blogs.id, :class => "archive_button"} Archive
-        - else
-          %button{id: blogs.id, :class => "archive_button"} Archived
+  %hr
+  = image_tag blogs.image.to_s
+  %br
+  %ins
+    %strong
+      = link_to blogs.title, blog_path(blogs)
+  %br
+  = blogs.caption
+  %br
+  = blogs.description
+  %br
+  -if blogs.is_draft
+    %button{id: blogs.id} Edit
+    %button{id: blogs.id, :class => "go_live_button"} Live
+  -else
+    .archive_button
+      - if blogs.is_archived?
+        %button{id: blogs.id, :class => "archive_button"} Archive
+      - else
+        %button{id: blogs.id, :class => "archive_button"} Archived

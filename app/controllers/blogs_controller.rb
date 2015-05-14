@@ -3,7 +3,7 @@ class BlogsController < ApplicationController
   before_action :authenticate_user!, except: [:show]
 
   def index
-    @blog = Blog.where(user_id: current_user.id)
+    @blogs = Blog.where(user_id: current_user.id).paginate(page: params[:page], per_page: 5)
   end
 
 
@@ -20,14 +20,14 @@ class BlogsController < ApplicationController
   def update
     @blog = Blog.find(params[:id])
     if @blog.update_attributes(user_params)
-      render blogs_path
+      redirect_to blogs_path
     end
   end
 
 
   def new
   	@blog = Blog.new
-    @category = Category.all
+    @categor = Category.all
   end
 
   def create	
@@ -37,37 +37,18 @@ class BlogsController < ApplicationController
 
 
   	if @blog.save
-  		flash[:success] = "Micropost created!"
-  		redirect_to root_url
+  		flash[:success] = "Blog created!"
+  		redirect_to root_path
   	else
   		flash.now[:error] = "Could not save"
-  		render '/pages/home'
+  		redirect_to root_path
   	end
   end
 
   private
-
-    def micropost_params
-      params.require(:micropost).permit(:content, :picture)
-    end
     
     def blog_params
       params.require(:blog).permit(:image, :title,:caption,:description)
     end
-
-    # Confirms a logged-in user.
-		def logged_in_user
-			unless logged_in?
-		      	store_location
-		        flash[:danger] = "Please log in."
-		        redirect_to root_path
-		    end
-		end
-
-
-      def store_location
-   		   session[:forwarding_url] = request.url if request.get?
-   		end
-
 
 end
