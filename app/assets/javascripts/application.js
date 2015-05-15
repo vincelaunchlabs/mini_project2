@@ -14,40 +14,36 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
-
+//= require select2
 
 $(document).ready(function(){
+  $(".js-example-basic-multiple").select2();
 
-$("#buttonUploader").bind("click", function () {
-  $("#imageUploader").trigger("click");
-});
 
-$('#imageUploader').change(function(data) {
-  setTimeout(function(){
-    var fileUpload = new FileReader;
-    var file = document.getElementById("imageUploader").files[0];
-    var image = new Image();
+  $("#buttonUploader").bind("click", function () {
+    $("#imageUploader").trigger("click");
+  });
+
+  $('#imageUploader').change(function(data) {
     setTimeout(function(){
-      fileUpload.onload = function (e){
-      return function (e){
-        image.src = e.target.result
-        $("#base64Image").val(e.target.result);
-        $("#displayImage").css("background-image", "url(" + image.src + ")");
-      }
-    }(file);
-    fileUpload.readAsDataURL(file);
+      var fileUpload = new FileReader;
+      var file = document.getElementById("imageUploader").files[0];
+      var image = new Image();
+      setTimeout(function(){
+        fileUpload.onload = function (e){
+        return function (e){
+          image.src = e.target.result
+          $("#base64Image").val(e.target.result);
+          $("#displayImage").css("background-image", "url(" + image.src + ")");
+        }
+      }(file);
+      fileUpload.readAsDataURL(file);
+      });
     });
   });
-});
 
 
 
-  // $(".category_select2").select2({
-    // var categories = $(this).attr("name");
-    // data: categories
-    // placeholder: "Category"
-    // allowClear: true
-  // });
 
 
   $(".archive_button").click(function(){
