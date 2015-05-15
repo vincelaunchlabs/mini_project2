@@ -24,7 +24,7 @@ class BlogsController < ApplicationController
   def update
     image = params[:image]
     @blog = Blog.find(params[:id])
-    categories[] = @blog.categories
+    BlogsCategory.where(blog_id: @blog.id).destroy_all
     if @blog.update_attributes(blog_params)
       if image.present?
         image64 = image.split(",").second
@@ -34,7 +34,6 @@ class BlogsController < ApplicationController
         @blog.image = io
         @blog.save
       end
-
 
       if params[:categories].present?
         params[:categories].each do |category|
