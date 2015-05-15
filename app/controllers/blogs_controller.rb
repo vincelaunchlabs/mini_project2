@@ -52,7 +52,8 @@ class BlogsController < ApplicationController
     @blog = Blog.new(blog_params)
     # current_user.blogs.new(params[:blogs])  won't work
     @blog.user_id = current_user.id
-
+    puts "hello world"
+    puts @blog.id
 
   	if @blog.save
 
@@ -64,6 +65,15 @@ class BlogsController < ApplicationController
         @blog.image = io
         @blog.save
       end
+
+      if params[:categories].present?
+          puts "categoryispresent"
+        params[:categories].each do |category|
+          @blog_category = BlogsCategory.create({blog_id: @blog.id, category_id: category.to_i})
+          puts "numbercategories"
+        end
+      end
+
         flash[:success] = "Blog created!"
         redirect_to root_path
   	else
@@ -75,9 +85,9 @@ class BlogsController < ApplicationController
   private
     
     def blog_params
-      params.require(:blog).permit(:image, :title,:caption,:description)
+      params.require(:blog).permit(:image, :title, :caption, :description, category_id:[])
     end
-
+    
 end
 
 class BlogImageString < StringIO

@@ -1,7 +1,6 @@
 - if user_signed_in?
   %p
-    = link_to "Create Blog",  new_blog_path
-    |     
+    = button_to "Create Blog", new_blog_path, :method => :get
     = link_to "My Blogs",     blogs_path
 
   %p

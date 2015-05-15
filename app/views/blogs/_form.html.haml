@@ -10,7 +10,7 @@
   %br
   = f.text_area :description, placeholder: "Create new blog"
   %br
-  %select.js-example-basic-multiple{:multiple => "multiple", :style => "width: 12.5%"}
+  %select.js-example-basic-multiple{:multiple => "multiple", :style => "width: 25%", :name => "categories[]"}
     -@categories.each do |category|
       %option{:value => "#{category.id}"}= category.name
   %br
