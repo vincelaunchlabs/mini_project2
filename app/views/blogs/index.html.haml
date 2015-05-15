@@ -1,27 +1,31 @@
 = link_to "Back", :back
 = button_to "Create Blog", new_blog_path, :method => :get
 = will_paginate @blogs
-- @blogs.each do |blogs|
+- @blogs.each do |blog|
 
   %hr
-  = image_tag blogs.image.to_s
+  = image_tag blog.image.to_s
   %br
   %ins
     %strong
-      = link_to blogs.title, blog_path(blogs)
+      = link_to blog.title, blog_path(blog)
   %br
-  = blogs.caption
+  = blog.caption
   %br
-  = blogs.description
+  = blog.description
   %br
-  = button_to "Edit", edit_blog_path(blogs), :method => :get, :class => "edit_button", style: "display: none"
-  %button{id: blogs.id, :class => "go_live_button", style: "display: none"} Live
-  %button{id: blogs.id, :class => "archive_button", style: "display: none"} Archive
-  -if blogs.is_draft
-    = button_to "Edit", edit_blog_path(blogs), :method => :get, :class => "edit_button"
-    %button{id: blogs.id, :class => "go_live_button"} Live
+
+  - blog.categories.each do |category|
+    = category.name
+
+  = button_to "Edit", edit_blog_path(blog), :method => :get, :class => "edit_button", style: "display: none"
+  %button{id: blog.id, :class => "go_live_button", style: "display: none"} Live
+  %button{id: blog.id, :class => "archive_button", style: "display: none"} Archive
+  -if blog.is_draft
+    = button_to "Edit", edit_blog_path(blog), :method => :get, :class => "edit_button"
+    %button{id: blog.id, :class => "go_live_button"} Live
   -else
-    - if blogs.is_archived?
-      %button{id: blogs.id, :class => "archive_button"} Archived
+    - if blog.is_archived?
+      %button{id: blog.id, :class => "archive_button"} Archived
     - else
-      %button{id: blogs.id, :class => "archive_button"} Archive
+      %button{id: blog.id, :class => "archive_button"} Archive

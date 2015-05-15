@@ -12,6 +12,9 @@
   %br
   %select.js-example-basic-multiple{:multiple => "multiple", :style => "width: 25%", :name => "categories[]"}
     -@categories.each do |category|
-      %option{:value => "#{category.id}"}= category.name
+      -if @blog.categories.include?(category)
+        %option{:value => "#{category.id}", :selected => true}=category.name
+      - else
+        %option{:value => "#{category.id}"}= category.name
   %br
   = f.submit @btnsave

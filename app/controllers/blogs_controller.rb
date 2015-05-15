@@ -5,6 +5,7 @@ class BlogsController < ApplicationController
 
   def index
     @blogs = Blog.where(user_id: current_user.id).paginate(page: params[:page], per_page: 5)
+    @categories = BlogsCategory.all
   end
 
 
@@ -15,6 +16,7 @@ class BlogsController < ApplicationController
 
   def edit
     @blog = Blog.find(params[:id])
+    @categories = Category.all
     @btnsave = "Update"
   end
 
@@ -22,6 +24,7 @@ class BlogsController < ApplicationController
   def update
     image = params[:image]
     @blog = Blog.find(params[:id])
+    categories[] = @blog.categories
     if @blog.update_attributes(blog_params)
       if image.present?
         image64 = image.split(",").second
@@ -31,6 +34,14 @@ class BlogsController < ApplicationController
         @blog.image = io
         @blog.save
       end
+
+
+      if params[:categories].present?
+        params[:categories].each do |category|
+          @blog_category = BlogsCategory.create({blog_id: @blog.id, category_id: category.to_i})
+        end
+      end
+
         flash[:success] = "Blog updates!"
         redirect_to blogs_path
     else
@@ -52,8 +63,6 @@ class BlogsController < ApplicationController
     @blog = Blog.new(blog_params)
     # current_user.blogs.new(params[:blogs])  won't work
     @blog.user_id = current_user.id
-    puts "hello world"
-    puts @blog.id
 
   	if @blog.save
 
@@ -67,10 +76,8 @@ class BlogsController < ApplicationController
       end
 
       if params[:categories].present?
-          puts "categoryispresent"
         params[:categories].each do |category|
-          @blog_category = BlogsCategory.create({blog_id: @blog.id, category_id: category.to_i})
-          puts "numbercategories"
+        @blog_category = BlogsCategory.create({blog_id: @blog.id, category_id: category.to_i})
         end
       end
 
