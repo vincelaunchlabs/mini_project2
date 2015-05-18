@@ -20,9 +20,6 @@
     - blog.categories.each do |category|
       = category.name
 
-  = button_to "Edit", edit_blog_path(blog), :method => :get, :class => "edit_button", style: "display: none"
-  %button{id: blog.id, :class => "go_live_button", style: "display: none"} Live
-  %button{id: blog.id, :class => "archive_button", style: "display: none"} Archive
   -if blog.is_draft
     = button_to "Edit", edit_blog_path(blog), :method => :get, :class => "edit_button"
     %button{id: blog.id, :class => "go_live_button"} Live

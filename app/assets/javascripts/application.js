@@ -1,4 +1,4 @@
-// This is a manifest file that'll be compiled into application.js, which will include all the files
+  // This is a manifest file that'll be compiled into application.js, which will include all the files
 // listed below.
 //
 // Any JavaScript/Coffee file within this directory, lib/assets/javascripts, vendor/assets/javascripts,
@@ -64,14 +64,15 @@ $(document).ready(function(){
       },
       success:function(data){
         if(data.is_archived == true){
-          $(".archive_button").html("Archived");
+          $("#"+blogID).html("Archived");
         }
         else{
-          $(".archive_button").html("Archive");
+          $("#"+blogID).html("Archive");
         }
       }
     });
   });
+
 
   $(".go_live_button").click(function(){
     var blogID = $(this).attr("id");
