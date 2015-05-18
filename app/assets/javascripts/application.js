@@ -35,9 +35,9 @@ $(document).ready(function(){
       setTimeout(function(){
         fileUpload.onload = function (e){
         return function (e){
-          image.src = e.target.result
+          image.src = e.target.result;
           $("#base64Image").val(e.target.result);
-          $("#displayImage").css("background-image", "url(" + image.src + ")");
+          $("#displayImage").css("background-image", "url('" + image.src + "')");
         }
       }(file);
       fileUpload.readAsDataURL(file);
