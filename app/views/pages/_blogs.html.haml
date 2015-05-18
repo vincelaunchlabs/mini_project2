@@ -13,6 +13,12 @@
   %br
   Description: 	
   = blogs.description
+  %br
+  - if blogs.categories.any?
+    = pluralize(blogs.categories.count, "Category")
+    = ":"
+    - blogs.categories.each do |category|
+      = category.name
 
   %br
   %br

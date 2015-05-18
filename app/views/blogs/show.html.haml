@@ -11,3 +11,9 @@ Caption:
 %br
 Description:
 = @blog.description
+%br
+- if @blog.categories.any?
+  = pluralize(@blog.categories.count, "Category")
+  = ":"
+  - @blog.categories.each do |category|
+    = category.name

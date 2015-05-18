@@ -14,9 +14,11 @@
   %br
   = blog.description
   %br
-
-  - blog.categories.each do |category|
-    = category.name
+  - if blog.categories.any?
+    = pluralize(blog.categories.count, "Category")
+    = ":"
+    - blog.categories.each do |category|
+      = category.name
 
   = button_to "Edit", edit_blog_path(blog), :method => :get, :class => "edit_button", style: "display: none"
   %button{id: blog.id, :class => "go_live_button", style: "display: none"} Live
