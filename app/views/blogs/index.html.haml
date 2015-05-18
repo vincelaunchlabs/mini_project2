@@ -19,12 +19,15 @@
     = ":"
     - blog.categories.each do |category|
       = category.name
+  %br
+
 
   -if blog.is_draft
-    = button_to "Edit", edit_blog_path(blog), :method => :get, :class => "edit_button"
-    %button{id: blog.id, :class => "go_live_button"} Live
+    = button_to "Edit", edit_blog_path(blog), :method => :get, :class => "edit_button", :id => "edit_btn_"+blog.id.to_s
+    %button{id: "live_btn_"+blog.id.to_s, :class => "go_live_button", :value => blog.id} Live
+    %button{id: "archive_btn_"+blog.id.to_s, :class => "archive_button", :style => "display: none; "} Archive
   -else
     - if blog.is_archived?
-      %button{id: blog.id, :class => "archive_button"} Archived
+      %button{id: blog.id.to_s, :class => "archive_button"} Archived
     - else
       %button{id: blog.id, :class => "archive_button"} Archive
