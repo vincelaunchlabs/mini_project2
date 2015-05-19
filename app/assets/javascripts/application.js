@@ -1,4 +1,4 @@
-  // This is a manifest file that'll be compiled into application.js, which will include all the files
+// This is a manifest file that'll be compiled into application.js, which will include all the files
 // listed below.
 //
 // Any JavaScript/Coffee file within this directory, lib/assets/javascripts, vendor/assets/javascripts,
@@ -16,25 +16,9 @@
 //= require_tree .
 //= require select2
 
+
 $(document).ready(function(){
 
-  $('.toggle_button').bind("click", function() {
-    var blogID = $(this).attr("id");
-    var divelement = document.getElementById('archive_btn_'+blogID);
-    if(divelement.style.display == 'none'){
-      divelement.style.display = 'block';
-
-
-      document.getElementById('edit_btn_'+blogID).style.display='none';
-      document.getElementById('live_btn_'+blogID).style.display='none';
-
-      console.log("if");
-    }
-    else{
-      divelement.style.display = 'none';
-      console.log("else");
-    }
-  });
 
   $(".js-example-basic-multiple").select2({
     placeholder: "Categories",
@@ -57,6 +41,7 @@ $(document).ready(function(){
           image.src = e.target.result;
           $("#base64Image").val(e.target.result);
           $("#displayImage").css("background-image", "url('" + image.src + "')");
+          $("#displayImage").show();
         }
       }(file);
       fileUpload.readAsDataURL(file);
@@ -65,7 +50,8 @@ $(document).ready(function(){
   });
 
 
-  $(".archive_button").click(function(){
+  $("body").on("click", ".archive_button", function(){
+    console.log("SDf");
     var blogID = $(this).attr("id");
     $.ajax({      
       url:"/ajax/blogs/" + blogID + "/archive",
@@ -90,7 +76,7 @@ $(document).ready(function(){
   });
 
 
-  $(".go_live_button").click(function(){
+  $(".live_button").on("click", function(){
     var blogID = $(this).attr("id");
     $.ajax({      
       url:"/ajax/blogs/" + blogID + "/live",
@@ -104,25 +90,19 @@ $(document).ready(function(){
           
       },
       success:function(data){
-        if(data.is_draft == true){
-          $("#"+blogID).html("Live");
-          $(".archive_button").show();
-        }
-        else{
-          $(".go_live_button").hide();
-          $(".edit_button").hide();
-          $(".archive_button").show();
+        if(data.is_draft == false){
+          $("#edit"+ blogID).remove();
+          $("#"+blogID).removeClass("live_button").addClass("archive_button").html("Archive");
         }
       }
     });
+  });
 
-    var blogID = $(this).attr("value");
-    var divelement = document.getElementById('archive_btn_'+blogID);
-    divelement.style.display = 'block';
-    document.getElementById('edit_btn_'+blogID).style.display='none';
-    document.getElementById('live_btn_'+blogID).style.display='none';
-    
+  $('.myclass').bind("click", function(){
 
+   console.log("MARK");
 
   });
+
+
 });
