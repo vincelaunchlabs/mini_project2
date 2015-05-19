@@ -1,0 +1,24 @@
+= will_paginate @blogs
+- @blogs.each do |blogs|
+
+  %hr
+  %br  	
+  = image_tag blogs.image.to_s	
+  %ins
+    %strong
+      = blogs.title
+  %br
+  Content:
+  = blogs.caption
+  %br
+  Description: 	
+  = blogs.description
+  %br
+  - if blogs.categories.any?
+    = pluralize(blogs.categories.count, "Category")
+    = ":"
+    - blogs.categories.each do |category|
+      = category.name
+
+  %br
+  %br

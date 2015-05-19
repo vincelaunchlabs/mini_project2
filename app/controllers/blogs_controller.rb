@@ -1,59 +1,101 @@
 class BlogsController < ApplicationController
 
-  before_action :logged_in_user, only: [:new, :edit, :index, :show, :create,]
-
+  before_action :authenticate_user!, except: [:show]
+  require 'base64'
 
   def index
-
+    @blogs = Blog.where(user_id: current_user.id).paginate(page: params[:page], per_page: 5)
+    @categories = BlogsCategory.all
   end
 
 
   def show
-
+    @blog = Blog.find(params[:id])
   end
 
 
   def edit
-
+    @blog = Blog.find(params[:id])
+    @categories = Category.all
+    @btnsave = "Update"
   end
+
+
+  def update
+    image = params[:image]
+    @blog = Blog.find(params[:id])
+    BlogsCategory.where(blog_id: @blog.id).destroy_all
+    if @blog.update_attributes(blog_params)
+      if image.present?
+        image64 = image.split(",").second
+        io = BlogImageString.new(Base64.decode64(image64))
+        io.original_filename = "foobar.png"
+        io.content_type = "image/png"
+        @blog.image = io
+        @blog.save
+      end
+
+      if params[:categories].present?
+        params[:categories].each do |category|
+          @blog_category = BlogsCategory.create({blog_id: @blog.id, category_id: category.to_i})
+        end
+      end
+
+        flash[:success] = "Blog updates!"
+        redirect_to blogs_path
+    else
+      flash.now[:error] = "Could not update"
+      redirect_to root_path
+    end
+  end
+
 
   def new
   	@blog = Blog.new
+    @categories = Category.all
+    @btnsave = "Create"
   end
 
   def create	
-  	@blog = Blog.new(params.require(:blog).permit(:title,:caption,:description))
-  	@blog.user_id = current_user.id
-	if @blog.save
-		flash[:success] = "Micropost created!"
-		redirect_to root_url
-	else
-		flash.now[:error] = "Could not save"
-		render '/pages/home'
-	end
+
+    image = params[:image]
+    @blog = Blog.new(blog_params)
+    # current_user.blogs.new(params[:blogs])  won't work
+    @blog.user_id = current_user.id
+
+  	if @blog.save
+
+      if image.present?
+        image64 = image.split(",").second
+        io = BlogImageString.new(Base64.decode64(image64))
+        io.original_filename = "foobar.png"
+        io.content_type = "image/png"
+        @blog.image = io
+        @blog.save
+      end
+
+      if params[:categories].present?
+        params[:categories].each do |category|
+        @blog_category = BlogsCategory.create({blog_id: @blog.id, category_id: category.to_i})
+        end
+      end
+
+        flash[:success] = "Blog created!"
+        redirect_to root_path
+  	else
+  		flash.now[:error] = "Could not save"
+  		redirect_to root_path
+  	end
   end
 
   private
-  			    # Confirms a logged-in user.
-		def logged_in_user
-			unless logged_in?
-		      	store_location
-		        flash[:danger] = "Please log in."
-		        redirect_to root_path
-		    end
-		end
+    
+    def blog_params
+      params.require(:blog).permit(:image, :title, :caption, :description, category_id:[])
+    end
+    
+end
 
-	  	# Returns true if the user is logged in, false otherwise.
-  		def logged_in?
-       		!current_user.nil?
-      	end
-
-      	def store_location
-   		   session[:forwarding_url] = request.url if request.get?
-   		end
-
-   		def user_email
-   			current_user.id
-   		end
-
+class BlogImageString < StringIO
+  attr_accessor :original_filename, :content_type
 end

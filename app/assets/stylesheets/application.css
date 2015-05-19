@@ -12,4 +12,13 @@
  *
  *= require_tree .
  *= require_self
+ *= require select2
  */
+
+ #displayImage{
+  background-size: 100% auto;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 200px;
+  width: 200px;
+ }

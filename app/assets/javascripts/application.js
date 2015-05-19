@@ -14,3 +14,95 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+//= require select2
+
+
+$(document).ready(function(){
+
+
+  $(".js-example-basic-multiple").select2({
+    placeholder: "Categories",
+    allowClaer: true
+  });
+
+
+  $("#buttonUploader").bind("click", function () {
+    $("#imageUploader").trigger("click");
+  });
+
+  $('#imageUploader').change(function(data) {
+    setTimeout(function(){
+      var fileUpload = new FileReader;
+      var file = document.getElementById("imageUploader").files[0];
+      var image = new Image();
+      setTimeout(function(){
+        fileUpload.onload = function (e){
+        return function (e){
+          image.src = e.target.result;
+          $("#base64Image").val(e.target.result);
+          $("#displayImage").css("background-image", "url('" + image.src + "')");
+          $("#displayImage").show();
+        }
+      }(file);
+      fileUpload.readAsDataURL(file);
+      });
+    });
+  });
+
+
+  $("body").on("click", ".archive_button", function(){
+    console.log("SDf");
+    var blogID = $(this).attr("id");
+    $.ajax({      
+      url:"/ajax/blogs/" + blogID + "/archive",
+      type: "PUT",
+      dataType:'json',
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+        
+      },
+      error:function(data){ 
+          
+      },
+      success:function(data){
+        if(data.is_archived == true){
+          $("#"+blogID).html("Archived");
+        }
+        else{
+          $("#"+blogID).html("Archive");
+        }
+      }
+    });
+  });
+
+
+  $(".live_button").on("click", function(){
+    var blogID = $(this).attr("id");
+    $.ajax({      
+      url:"/ajax/blogs/" + blogID + "/live",
+      type: "PUT",
+      dataType:'json',
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+        
+      },
+      error:function(data){ 
+          
+      },
+      success:function(data){
+        if(data.is_draft == false){
+          $("#edit"+ blogID).remove();
+          $("#"+blogID).removeClass("live_button").addClass("archive_button").html("Archive");
+        }
+      }
+    });
+  });
+
+  $('.myclass').bind("click", function(){
+
+   console.log("MARK");
+
+  });
+
+
+});

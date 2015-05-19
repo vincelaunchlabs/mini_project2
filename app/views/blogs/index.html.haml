@@ -1,0 +1,31 @@
+%br
+= button_to "Create Blog", new_blog_path, :method => :get
+= will_paginate @blogs
+
+- @blogs.each do |blog|
+  %hr
+  = image_tag blog.image.to_s
+  %br
+  %ins
+    %strong
+      = link_to blog.title, blog_path(blog)
+  %br
+  = blog.caption
+  %br
+  = blog.description
+  %br
+  - if blog.categories.any?
+    = pluralize(blog.categories.count, "Category")
+    = ":"
+    - blog.categories.each do |category|
+      = category.name
+  %br
+
+  -if blog.is_draft
+    = button_to "Edit", edit_blog_path(blog), :method => :get, :id => "edit#{blog.id}"
+    %button{id: "#{blog.id}", :class => "live_button"} Live
+  -else
+    - if blog.is_archived?
+      %button{id: "#{blog.id}", :class => "archive_button"} Archived
+    - else
+      %button{id: "#{blog.id}", :class => "archive_button"} Archive
